@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <title>Happy Badges</title>
+    <link rel="shortcut icon" href="~/fonts/certificate.png" />
+    @Styles.Render("~/Content/css")
+</head>
+<body ng-controller="homeCtrl" ng-cloak>
+    <img class="img-responsive col-md-offset-2" src="~/fonts/Kodar-logo.jpg" alt="Kodar OOD" />
+    <div class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <a href="#/give" class="navbar-brand">Happy Badges</a>
+                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse" id="navbar-main">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="#/give">Give</a>
+                    </li>
+                    <li>
+                        <a href="#/upload">Save</a>
+                    </li>
+                    <li>
+                        <a href="#/view">View</a>
+                    </li>
+                    <li ng-if="userRole == '1' || userRole === '2'">
+                        <a href="#/tags">Tags</a>
+                    </li>
+                </ul>
+
+                @if (Request.IsAuthenticated)
+                {
+                    using (Html.BeginForm("LogOff", "OAuth", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <ul class="nav navbar-nav navbar-right">
+                            <li>
+                                @Html.Label(User.Identity.Name)
+                                <a href="javascript:document.getElementById('logoutForm').submit()" style="display:inline-block">Log off</a>
+                            </li>
+                        </ul>
+                    }
+                }
+                else
+                {
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="OAuth/LogIn">Log in</a></li>
+                    </ul>
+                }
+
+            </div>
+        </div>
+    </div>
+    <div class="container" ng-view ng-cloak>
+    </div>
+    <footer>
+        <hr />
+        <p style="text-align:center">
+            Author: <a href="https://github.com/SveGeorgiev" target="_blank">Svetoslav Georgiev</a>,
+            Copyright: <a href="http://Kodar.net" target="_blank">Kodar</a> Academy 2015
+            <br />
+            powered by:
+            <a href="http://asp.net" target="_blank">ASP.NET</a>,
+            <a href="http://angularjs.org" target="_blank">AngularJS</a> and
+            <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>
+        </p>
+        <hr />
+    </footer>
+    <input id="redirectToOAuthController" type="hidden" value="http://badges.dev-kodar.net/oauth/index" />
+           @Scripts.Render("~/bundles/jquerybootstrap")
+           @Scripts.Render("~/bundles/angularjs")
+           @Scripts.Render("~/bundles/appjs")></body>
+</html>

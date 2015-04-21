@@ -1,0 +1,23 @@
+﻿.body-content {
+    margin-top: 3%;
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+.checkbox input[type="checkbox"] {
+    position: initial;
+}
+
+.checkbox label {
+    padding-left: initial;
+}
+
+input[type="file"] {
+    height: 100%;
+}
+
+#removeTag {
+    float: right;
+}

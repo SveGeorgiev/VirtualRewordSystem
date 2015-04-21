@@ -1,0 +1,26 @@
+﻿<form class="container" ng-controller="tagsCtrl" ng-submit="addTag()" name="tagsForm" ng-cloak>
+
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr class="info lead">
+                <td class="text-center">Tags</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="tag in model">
+                <td class="text-center">{{tag.name}}</td>
+            </tr>
+            <tr ng-if="model.length == 0">
+                <td colspan="4" class="text-center">There are no tags to display</td>
+            </tr>
+            <tr>
+                <td class="text-center">
+                    <input type="text" maxlength="25" class="form-control center-block text-center" ng-pattern="/^[a-z\-.#+]+$/"
+                           ng-model="new.Tag.Name" placeholder="Enter tag name" required /> 
+                    <br />
+                    <input type="submit" class="btn btn-sm btn-primary" ng-disabled="tagsForm.$invalid" value="Add" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>

@@ -1,0 +1,36 @@
+﻿<div class="container jumbotron" ng-controller="viewCtrl" ng-cloak>
+    <div class="col-md-6">
+        <h3 class="text-center">Gifts</h3>
+        <fieldset class="well the-fieldset" ng-repeat="gift in model.gifts">
+            <legend class="the-legend">{{gift.name | uppercase}}</legend>
+            <ul>
+                <li id="viewLi" ng-repeat="tag in gift.tags">
+                    <span class="glyphicon glyphicon-tag"></span> {{tag.name}} &nbsp;
+                </li>
+            </ul>
+            <strong>Reason:</strong>
+            <img id="viewImg" class="img-responsive img-rounded" alt="{{gift.file.fileName}}"
+                 ng-src="data:image/png;base64,{{gift.file.fileContent}}" />
+            <span> {{gift.reason}} </span><br />
+        </fieldset>
+        <div class="text-center" ng-show="model.gifts.length == 0">no gifts</div>
+    </div>
+
+    <div class="col-md-6">
+        <h3 class="text-center">Badges</h3>
+        <fieldset class="well the-fieldset" ng-repeat="badge in model.badges">
+            <legend class="the-legend">{{badge.name | uppercase}}</legend>
+            <ul>
+                <li id="viewLi" ng-repeat="tag in badge.tags">
+                    <span class="glyphicon glyphicon-tag"></span> {{tag.name}} &nbsp;
+                </li>
+            </ul>
+            <strong>Reason:</strong>
+            <img id="viewImg" class="img-responsive img-rounded" alt="{{badge.file.fileName}}"
+                 ng-src="data:image/png;base64,{{badge.file.fileContent}}" />
+            <span> {{badge.reason}} </span><br />
+        </fieldset>
+        <div class="text-center" ng-show="model.badges.length == 0">no badges</div>
+    </div>
+</div>
+<a id="scrollUp" href="#top" title="Scroll to top">Scroll to top</a>

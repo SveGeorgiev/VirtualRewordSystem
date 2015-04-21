@@ -1,0 +1,77 @@
+﻿<div class="container jumbotron" ng-controller="giveCtrl" ng-cloak>
+    <div ng-hide="isSend != true" class="ng-hide alert alert-info alert-dismissible fade in" role="alert" style="text-align: center;">
+        <span ng-if="model.flagType == true">Gift </span>
+        <span ng-if="model.flagType == false">Badge </span>
+        <strong>{{model.giftsBadges | uppercase}}</strong> is succsessfully given to <strong>{{model.userName | uppercase}}</strong>.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+
+    <form method="post" class="form-horizontal" name="giveBadgeForm">
+        <fieldset class="well the-fieldset">
+            <legend class="the-legend">Send Gift/Badge</legend>
+            <div class="col-md-offset-2">
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="usersName">Give to:</label>
+                    <select ng-model="give.giftBadge.UserName" class="form-control" data-val="true" required data-val-required="The UserName field is required." id="usersName" name="usersName">
+                        <option value="">Choose...</option>
+                        <option ng-repeat="user in give.users  | orderBy : 'name'">{{user.name}}</option>
+                    </select>
+                    <span class="col-md-offset-3 field-validation-valid" data-valmsg-for="usersName"
+                          data-valmsg-replace="false">Recipient is required.</span>
+                </div>
+
+                <div class="form-group">
+                    <div class="btn-group col-sm-offset-3">
+                        <label class="btn btn-primary">
+                            <input type="checkbox" autocomplete="off" id="giftCB" ng-click="flagTypeFilter" checked> Gifts
+                        </label>
+                        <label class="btn btn-primary">
+                            <input type="checkbox" autocomplete="off" id="badgeCB" ng-click="flagTypeFilter" checked> Badges
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="gifts">Gifts/Badges:</label>
+                    <select ng-model="give.giftBadge.GiftsBadges" class="form-control" data-val="true" required data-val-required="The Gift field is required." id="gifts" name="gifts">
+                        <option value="">Choose...</option>
+                        <option ng-repeat="giftBadge in give.giftsBadges | filter:flagTypeFilter">{{giftBadge.name}}</option>
+                    </select>
+                    <span class="col-md-offset-3 field-validation-valid" data-valmsg-for="gifts" data-valmsg-replace="false">Gift/Badge is required.</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="Reason">Reason:</label>
+                    <textarea ng-model="give.giftBadge.Reason" class="form-control" maxlength="1000" cols="20" data-val="true" required data-val-maxlength="The field Reason: must be a string or array type with a maximum length of &#39;2000&#39;."
+                              data-val-maxlength-max="1000" data-val-required="The Reason: field is required." id="Reason" name="Reason" rows="2"></textarea>
+                    <span class="col-md-offset-3 field-validation-valid" data-valmsg-for="Reason" data-valmsg-replace="false">The Reason is required.</span>
+                </div>
+
+                <div class="col-sm-offset-3 col-sm-9">
+                    <input type="submit" class="btn btn-primary" value="Send" ng-disabled="giveBadgeForm.$invalid" ng-click="giveBadgeGift(give.giftBadge, giveBadgeForm)" />
+                </div>
+
+            </div>
+        </fieldset>
+    </form>
+    <div class="modal fade" id="giveModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content jumbotron">
+                <fieldset class="well the-fieldset">
+                    <legend class="the-legend text-center">{{data.giftsBadges}}</legend>
+                    <ul class="center-block">
+                        <li id="viewLi" ng-repeat="tag in data.tags">
+                            <span class="glyphicon glyphicon-tag text-center"></span> {{tag.name}} &nbsp;
+                        </li>
+                    </ul>
+                    <strong>Reason:</strong>
+                    <img id="viewImg" class="img-responsive img-rounded" alt="{{data.file.fileName}}"
+                         ng-src="data:image/png;base64,{{data.file.fileContent}}" />
+                    <span> {{data.reason}} </span><br />
+                </fieldset>
+                <button type="button" class="btn btn-sm btn-primary text-center pull-right" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,78 @@
+﻿<div class="container jumbotron" ng-controller="saveCtrl" ng-cloak>
+
+    <div ng-hide="isSave != true" class="ng-hide alert alert-info alert-dismissible fade in" role="alert" style="text-align: center;">
+        <span ng-if="model.flagType == true">Gift </span>
+        <span ng-if="model.flagType == false">Badge </span>
+        <strong>{{model.name | uppercase}}</strong> is succsessfully saved.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+
+    <form method="post" enctype="multipart/form-data" class="form-horizontal" name="saveForm">
+        <fieldset class="well the-fieldset">
+            <legend class="the-legend" ng-if="model.userRole == '1' || model.userRole === '2'">Upload Gift/Badge</legend>
+            <legend class="the-legend" ng-if="model.userRole == '3' || model.userRole === '4'">Upload Gift</legend>
+            <div class="col-md-offset-2">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" for="name">Name:</label>
+                    <input type="text" name="name" maxlength="25" class="col-sm-9 form-control" ng-model="new.badge.name" required /><br />
+                </div>
+
+                <div class="form-group" ng-if="model.userRole == '1' || model.userRole === '2'">
+                    <div class="btn-group col-sm-offset-3">
+                        <div class="btn-group">
+                            <label class="btn btn-primary">
+                                <input type="radio" ng-model="new.badge.flagType" ng-click="saveGift()" name="flagType" id="gift" value="Gift" autocomplete="off" checked> Gift
+                            </label>
+                            <label class="btn btn-primary">
+                                <input type="radio" ng-model="new.badge.flagType" ng-click="saveBadge()" name="flagType" id="badge" value="Badge" autocomplete="off"> Badge
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="postedFile">Image:</label>
+                    <input type="file" class="form-control" file-model="myFile" id="postedFile"
+                           name="postedFile" required /><br />
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="selectedTags">Tags:</label>
+                    <select required multiple name="selectedTags" class="form-control" size="10" ng-multiple="true"
+                            ng-model="new.badge.selectedTags">
+                        <option ng-repeat="list in tagsList | filter:searchTags">{{list.name}}</option>
+                    </select><br />
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="selectedTags">Search:</label>
+                    <input class="form-control" ng-model="searchTags" name="searchTags">
+                    <br />
+                </div>
+
+                <div class="col-sm-offset-3 col-sm-9">
+                    <input id="saveBtn" type="submit" class="btn btn-primary" ng-click="submitForm(new.badge)"
+                           ng-disabled="saveForm.$invalid" value="Save Gift" />
+                </div>
+            </div>
+        </fieldset>
+    </form>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content jumbotron">
+                <fieldset class="well the-fieldset">
+                    <legend class="the-legend text-center">{{new.data.name}}</legend>
+                    <ul class="center-block">
+                        <li ng-repeat="tag in new.data.badgeTags">
+                            <span class="glyphicon glyphicon-tag text-center"></span> {{tag.tag.name}} &nbsp;
+                        </li>
+                    </ul>
+                    <img class="img-responsive img-rounded center-block" alt="{{new.data.file.fileName}}"
+                         ng-src="data:image/png;base64,{{new.data.file.fileContent}}" />
+                </fieldset>
+                <button type="button" class="btn btn-sm btn-primary text-center pull-right" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
